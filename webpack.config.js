@@ -1,4 +1,4 @@
-const path = require("path");
+/*const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
@@ -25,4 +25,27 @@ module.exports = {
       template: "./src/index.html"
     })
   ]
+};*/
+var path = require("path");
+var config = {
+  entry: ["./src/app.tsx"],
+  output: {
+    path: path.resolve(__dirname, "build"),
+    filename: "bundle.js"
+  },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js"]
+  },
+
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        loader: "ts-loader",
+        exclude: /node_modules/
+      }
+    ]
+  }
 };
+
+module.exports = config;
