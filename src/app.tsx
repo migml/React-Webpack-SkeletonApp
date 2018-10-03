@@ -1,15 +1,17 @@
-
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import { Router } from 'react-router-dom';
+import { Routes } from './routes';
+import createBrowserHistory from 'history/createBrowserHistory';
+//import * as Bootstrap from 'bootstrap';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 
-ReactDOM.render(
+const customHistory = createBrowserHistory()
+
+ReactDOM.render(<Router history={customHistory}>
     <div>
-        {(() => {
-            var a: string;
-            a = 'test1';
-            return a;
-        })()}
-        <h1>test</h1>
-    </div>,
+        <Routes />
+    </div>
+</Router>,
     document.getElementById("root")
 );
