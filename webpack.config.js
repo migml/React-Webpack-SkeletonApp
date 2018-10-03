@@ -27,6 +27,8 @@ module.exports = {
   ]
 };*/
 var path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
 var config = {
   entry: ["./src/app.tsx"],
   output: {
@@ -45,7 +47,12 @@ var config = {
         exclude: /node_modules/
       }
     ]
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./src/index.html"
+    })
+  ]
 };
 
 module.exports = config;
