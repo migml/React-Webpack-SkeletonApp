@@ -1,17 +1,40 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-import { Router } from 'react-router-dom';
-import { Routes } from './routes';
-import createBrowserHistory from 'history/createBrowserHistory';
-//import * as Bootstrap from 'bootstrap';
-//import 'bootstrap/dist/css/bootstrap.min.css';
 
-const customHistory = createBrowserHistory()
 
-ReactDOM.render(<Router history={customHistory}>
-    <div>
-        <Routes />
-    </div>
-</Router>,
-    document.getElementById("root")
-);
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { AppContainer } from 'react-hot-loader';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'react-router-redux';
+import { createBrowserHistory } from 'history';
+import configureStore from './configureStore';
+import { ApplicationState } from './store';
+import 'bootstrap';
+//import './assets/css/bootstrap.css';
+
+import * as RoutesModule from './routes';
+let routes = RoutesModule.routes;
+
+const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href')!;
+const history = createBrowserHistory({ basename: baseUrl });
+const initialState = (window as any).initialReduxState as ApplicationState;
+const store = configureStore(history, initialState);
+
+function renderApp() {
+
+    ReactDOM.render(<AppContainer>
+        <Provider store={store}>
+            <ConnectedRouter history={history} children={routes} />
+        </Provider>
+    </AppContainer>,
+        document.getElementById("root")
+    );
+}
+
+renderApp();
+
+if (module.hot) {
+    module.hot.accept('./routes', () => {
+        routes = require<typeof RoutesModule>('./routes').routes;
+        renderApp();
+    });
+}

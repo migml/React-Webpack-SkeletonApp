@@ -3,6 +3,6 @@ import { NavLink } from 'react-router-dom';
 
 export class About extends React.Component {
     public render() {
-        return <div>About<br /><br /><br /><NavLink to="/home" >Home</NavLink></div>;
+        return <div>Abouttt<br /><br /><br /><NavLink to="/home" >Homee2easdas 666 fsdfs</NavLink></div>;
     }
 }

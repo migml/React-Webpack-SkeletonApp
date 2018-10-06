@@ -1,39 +1,13 @@
-/*const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-
-module.exports = {
-  entry: "./src/index.js",
-  output: {
-    path: path.join(__dirname, "/dist"),
-    filename: "index-bundle.js"
-  },
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: ["babel-loader"]
-      },
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"]
-      }
-    ]
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: "./src/index.html"
-    })
-  ]
-};*/
 var path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const WebPack = require("webpack");
 
 var config = {
   entry: ["./src/app.tsx"],
   output: {
-    path: path.resolve(__dirname, "build"),
-    filename: "bundle.js"
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/'
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js"]
@@ -45,13 +19,25 @@ var config = {
         test: /\.tsx?$/,
         loader: "ts-loader",
         exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
+      },
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        loader: 'file-loader'
       }
     ]
+  },
+  devServer: {
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html"
-    })
+    }),
+    new WebPack.HotModuleReplacementPlugin(),
   ]
 };
 
